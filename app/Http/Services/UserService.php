@@ -30,7 +30,7 @@ readonly class UserService
         $this->userRepository->delete($user);
     }
 
-    public function update(UserUpdateRequest $requestData, User $user): bool
+    public function update(UserUpdateRequest $requestData, User $user): User
     {
         return $this->userRepository->update($requestData, $user);
     }

@@ -16,15 +16,19 @@ class UserRepository
         return User::all();
     }
 
-    public function update(UserUpdateRequest $request, User $user): bool
+    public function update(UserUpdateRequest $request, User $user): User
     {
-        return $user->update(['name' => $request->get('Name')]);
+        $user->update(['name' => $request->get('Name')]);
+
+        return $user;
     }
 
     public function create(UserRequestData $request): User
     {
         $user = new User();
-        $user->id = $request->id;
+        if ($request->id) {
+            $user->id = $request->id;
+        }
         $user->name = $request->name;
         $user->is_admin = $request->isAdmin;
         $user->balance_usdt = $request->balanceUSDT;

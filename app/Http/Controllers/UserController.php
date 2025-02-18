@@ -8,6 +8,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Services\UserService;
 use App\Models\User;
+use HttpResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,10 +41,10 @@ class UserController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'RefID' => 'required',
-            'ID' => 'required',
-            'Name' => 'required',
-            'Email' => 'required|email|unique:users,email',
+            'RefID' => 'required|integer',
+            'ID' => 'required|integer',
+            'Name' => 'required|string|max:255',
+            'Email' => 'required|email|unique:users,email|max:255',
             'BalanceUSDT' => 'required|numeric',
             'TelegramID' => 'integer',
             'JoinTime' => 'date',
@@ -54,9 +55,9 @@ class UserController extends Controller
             'data' => new UserResource(
                 $this->userService->store($requestData)
             ),
-            'status' => Response::HTTP_OK,
+            'status' => Response::HTTP_CREATED,
             'description' => UserStatusResponseEnum::UserStoredSuccessfully,
-        ]);
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -94,9 +95,6 @@ class UserController extends Controller
     {
         $this->userService->delete($user);
 
-        return new JsonResponse([
-            'status' => Response::HTTP_NO_CONTENT,
-            'description' => UserStatusResponseEnum::SuccessfulDeleted->value,
-        ]);
+        return new JsonResponse(status: Response::HTTP_NO_CONTENT);
     }
 }

@@ -15,7 +15,7 @@ class UserRequestDataFactory
         $data->name = $request->get('Name');
         $data->email = $request->get('Email');
         $data->refId = $request->get('RefID');
-        $data->isAdmin = $request->get('is_admin');
+        $data->isAdmin = (bool) $request->get('is_admin');
         $data->telegramId = $request->get('TelegramID');
         $data->balanceUSDT = $request->get('BalanceUSDT');
         $data->joinTime = $request->get('JoinTime');
