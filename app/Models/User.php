@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property int id
+ * @property int ref_id
+ * @property float balance_usdt
+ * @property string name
+ * @property string email
+ * @property string created_at
+ * @property int telegram_id
+ * @property bool is_admin
+ */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -20,7 +30,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'ref_id',
+        'telegram_id',
+        'is_admin',
+        'balance_usdt',
     ];
 
     /**
